@@ -1,0 +1,73 @@
+# Student Grades Manager Program
+
+# Function to convert percentage to letter grade and GPA
+def calculate_letter_grade(average):
+    if average >= 90:
+        return 'A', 4.0
+    elif average >= 80:
+        return 'B', 3.0
+    elif average >= 70:
+        return 'C', 2.0
+    elif average >= 60:
+        return 'D', 1.0
+    else:
+        return 'F', 0.0
+
+# Function to calculate the average grade
+def calculate_average(grades):
+    if len(grades) == 0:
+        return 0
+    return sum(grades) / len(grades)
+
+# Function to display the report
+def display_report(subjects, grades, average, letter_grade, gpa):
+    print("\n--- Student Grade Report ---")
+    print(f"{'Subject':<20} {'Grade':<10}")
+    print("-" * 30)
+    for subject, grade in zip(subjects, grades):
+        print(f"{subject:<20} {grade:<10}")
+    
+    print("-" * 30)
+    print(f"Average Grade: {average:.2f}")
+    print(f"Letter Grade: {letter_grade}")
+    print(f"GPA: {gpa:.2f}")
+
+# Main program function to manage grades
+def manage_student_grades():
+    subjects = []
+    grades = []
+    
+    print("Welcome to the Student Grade Manager!")
+
+    # Input grades for subjects
+    while True:
+        subject = input("Enter subject name (or type 'done' to finish): ")
+        if subject.lower() == 'done':
+            break
+        try:
+            grade = float(input(f"Enter grade for {subject}: "))
+            if 0 <= grade <= 100:
+                subjects.append(subject)
+                grades.append(grade)
+            else:
+                print("Grade must be between 0 and 100. Try again.")
+        except ValueError:
+            print("Invalid input. Please enter a valid number for the grade.")
+
+    # If there are no grades entered, exit
+    if not grades:
+        print("No grades entered. Exiting program.")
+        return
+    
+    # Calculate average grade
+    average_grade = calculate_average(grades)
+
+    # Determine letter grade and GPA
+    letter_grade, gpa = calculate_letter_grade(average_grade)
+
+    # Display the final report
+    display_report(subjects, grades, average_grade, letter_grade, gpa)
+
+# Run the program
+if __name__ == "_main_":
+    manage_student_grades()
